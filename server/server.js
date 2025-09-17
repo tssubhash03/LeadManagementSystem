@@ -1,20 +1,28 @@
-require('dotenv').config();
 const express = require('express');
 const connectDB = require('./config/db');
+const cors = require('cors');
+const cookieParser = require('cookie-parser');
+require('dotenv').config();
 
 const app = express();
 
-// Connect to MongoDB
+// Connect DB
 connectDB();
 
-// Middleware to parse JSON
+// Middlewares
+app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
 app.use(express.json());
+app.use(cookieParser());
 
-// Define Routes
-app.use('/', require('./routes/index'));
+// Test route
+app.get('/', (req, res) => res.send('Lead Management System API is running'));
 
-// Start the server
+// Import Lead Routes
+const leadRoutes = require('./routes/leads');
+
+// Use lead routes
+app.use('/leads', leadRoutes);
+
+// Listen to port
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on http://localhost:${PORT}`);
-});
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
