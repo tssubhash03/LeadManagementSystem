@@ -4,6 +4,7 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 
 const leadRoutes = require('./routes/leads');
+const authRoutes = require('./routes/auth');
 
 require('dotenv').config();
 
@@ -24,6 +25,10 @@ app.get('/', (req, res) => res.send('Lead Management System API is running'));
 
 // Use lead routes
 app.use('/leads', leadRoutes);
+
+
+// Use auth routes
+app.use('/auth', authRoutes);
 
 // Listen to port
 const PORT = process.env.PORT || 5000;
