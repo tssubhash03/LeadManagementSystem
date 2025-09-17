@@ -2,6 +2,9 @@ const express = require('express');
 const connectDB = require('./config/db');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
+
+const leadRoutes = require('./routes/leads');
+
 require('dotenv').config();
 
 const app = express();
@@ -18,7 +21,6 @@ app.use(cookieParser());
 app.get('/', (req, res) => res.send('Lead Management System API is running'));
 
 // Import Lead Routes
-const leadRoutes = require('./routes/leads');
 
 // Use lead routes
 app.use('/leads', leadRoutes);

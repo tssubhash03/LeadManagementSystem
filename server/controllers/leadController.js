@@ -129,3 +129,21 @@ exports.listLeads = async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 };
+
+exports.getLeadById = async (req, res) => {
+  try {
+    const leadId = req.params.id;
+
+    const lead = await Lead.findById(leadId);
+
+    if (!lead) {
+      return res.status(404).json({ message: 'Lead not found' });
+    }
+
+    res.json({ data: lead });
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
