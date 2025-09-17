@@ -170,3 +170,20 @@ exports.updateLead = async (req, res) => {
   }
 };
 
+exports.deleteLead = async (req, res) => {
+  try {
+    const leadId = req.params.id;
+
+    const deletedLead = await Lead.findByIdAndDelete(leadId);
+
+    if (!deletedLead) {
+      return res.status(404).json({ message: 'Lead not found' });
+    }
+
+    res.json({ message: 'Lead deleted successfully' });
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
