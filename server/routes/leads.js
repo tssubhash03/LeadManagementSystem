@@ -1,8 +1,11 @@
 const express = require('express');
 const router = express.Router();
 
+const { authMiddleware } = require('../middlewares/authMiddleware');
+router.use(authMiddleware);
 
 const { createLead, listLeads, getLeadById, updateLead, deleteLead } = require('../controllers/leadController');
+
 
 // POST /leads → Create a lead
 router.post('/', createLead);
