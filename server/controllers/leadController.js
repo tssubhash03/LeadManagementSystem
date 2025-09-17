@@ -147,3 +147,26 @@ exports.getLeadById = async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 };
+
+exports.updateLead = async (req, res) => {
+  try {
+    const leadId = req.params.id;
+    const updates = req.body;
+
+    // Automatically update `updated_at`
+    updates.updated_at = new Date();
+
+    const updatedLead = await Lead.findByIdAndUpdate(leadId, updates, { new: true });
+
+    if (!updatedLead) {
+      return res.status(404).json({ message: 'Lead not found' });
+    }
+
+    res.json({ message: 'Lead updated successfully', data: updatedLead });
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
